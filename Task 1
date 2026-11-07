@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# 1. Assign script arguments to targetDirectory and destinationDirectory
+
+targetDirectory=$1
+
+destinationDirectory=$2
+
+# 2. Print the target and destination directory paths
+
+echo "Target Directory: $targetDirectory"
+
+echo "Destination Directory: $destinationDirectory"
+
+# 3. Set currentTS to the current timestamp in seconds
+
+currentTS=$(date '+%s')
+
+# 4. Set backupFileName using the current seconds timestamp
+
+backupFileName="backup-${currentTS}.tar.gz"
+
+# 5. Define origAbsPath as the current absolute path
+
+origAbsPath=$(pwd)
+
+# 6. Change into destinationDirectory and store absolute path in destAbsPath
+
+cd "$destinationDirectory"
+
+destAbsPath=$(pwd)
+
+# 7. Change back to origAbsPath, then change into targetDirectory
+
+cd "$origAbsPath"
+
+cd "$targetDirectory"
+
+# 8. Set yesterdayTS to the timestamp 24 hours (86400 seconds) before currentTS
+
+yesterdayTS=$(($currentTS - 24 * 60 * 60))
+
+# Initialize the toBackup array
+
+declare -a toBackup
+
+# 9. Loop over all files and directories in the current directory with wildcard *
+
+for file in *
+
+do
+
+    # 10. Check if file was modified within the past day
+
+    # Note: stat -c %Y retrieves the last modification timestamp in seconds on Linux
+
+    if [ $(stat -c %Y "$file") -gt $yesterdayTS ]
+
+    then
+
+        # 11. Add the name of each modified file to the toBackup array
+
+        toBackup+=("$file")
+
+    fi
+
+done
+
+# 12. Create the archived, compressed backup file in the current directory from toBackup
+
+tar -czvf "$backupFileName" "${toBackup[@]}"
+
+# 13. Move the backup file to the destination directory
+
+mv "$backupFileName" "$destAbsPath"
+
+echo "Backup process completed successfully."
