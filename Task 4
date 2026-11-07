@@ -1,0 +1,5 @@
+$ sudo cp backup.sh /usr/local/bin/
+
+$ which backup.sh
+
+/usr/local/bin/backup.sh
