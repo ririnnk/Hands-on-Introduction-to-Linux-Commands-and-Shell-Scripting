@@ -1,0 +1,17 @@
+$ ./backup.sh /home/project/target_dir /home/project/destination_dir
+
+Target Directory: /home/project/target_dir
+
+Destination Directory: /home/project/destination_dir
+
+file1.txt
+
+file2.txt
+
+Backup process completed successfully.
+
+$ cd /home/project/destination_dir
+
+$ ls -l backup-*.tar.gz
+
+-rw-r--r-- 1 user user 1024 Nov  7 08:31 backup-1794040260.tar.gz
