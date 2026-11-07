@@ -1,0 +1,5 @@
+$ chmod +x backup.sh
+
+$ ls -l backup.sh
+
+-rwxr-xr-x 1 user user 845 Nov  7 08:30 backup.sh
