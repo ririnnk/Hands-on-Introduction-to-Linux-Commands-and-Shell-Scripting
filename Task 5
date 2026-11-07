@@ -1,0 +1,5 @@
+$ crontab -l
+
+# Run backup script daily every 24 hours at midnight
+
+0 0 * * * /usr/local/bin/backup.sh /home/project/important-documents /home/project
